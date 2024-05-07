@@ -13,25 +13,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-"""NEW_DATABASE = 'users_new.db'
-
-def connect_db():
-    return sqlite3.connect(NEW_DATABASE)
-
-def create_table():
-    conn = connect_db()
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()"""
-
-
 # User model
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -97,9 +78,6 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-#    if current_user.is_authenticated:
-#        return redirect(url_for('index'))
-    
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -141,7 +119,7 @@ def post(post_id):
         new_comment = Comment(content=content, user_id=current_user.id, post_id=post.id)
         db.session.add(new_comment)
         db.session.commit()
-        flash('The comment has been added successfully!', 'success')
+        flash('comment has been added successfully!', 'success')
         return redirect(url_for('post', post_id=post.id))
     
     return render_template('post.html', post=post)
@@ -153,6 +131,9 @@ def profile():
 
     return render_template('profile.html', user=user)
 
+from flask import flash, redirect, url_for
+from flask_login import login_required
+
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
 @login_required
 def delete_post(post_id):
@@ -161,12 +142,13 @@ def delete_post(post_id):
     if post.author != current_user:
         flash('You are not authorized to delete this post.', 'danger')
         return redirect(url_for('index'))
-    
+
     db.session.delete(post)
     db.session.commit()
-    
+
     flash('Post deleted successfully.', 'success')
     return redirect(url_for('index'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

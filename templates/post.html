@@ -7,28 +7,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282c35;
+            color: #fff;
+            align-items: center;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        header {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #373c49;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        a {
+            color: rgb(28, 182, 143);
+        }
+
+        a:hover {
+            color: orange;
+        }
+
+        h1 {
+            line-height: 1.7;
+            color: aqua;
+        }
+
+        h2 {
+            line-height: 1.7;
+            color: blueviolet;
+        }
+
+        h3, h6, h4 {
+            line-height: 1.5;
+            color: rgb(23, 146, 50);
+        }
+
+        footer {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 0em 0;
+            position: fixed;
+            bottom: 0;
+            width: 65%;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>{{ post.title }}</h1>
-    <p>By: {{ post.author.username }} | Posted on: {{ post.date_posted }}</p>
-    <p>{{ post.content }}</p>
-    <hr>
-    <h2>Comments</h2>
-    {% for comment in post.comments %}
-        <div>
-            <p>By: {{ comment.user.username }} | Posted on: {{ comment.date_posted }}</p>
-            <p>{{ comment.content }}</p>
-        </div>
-    {% endfor %}
-    {% if current_user.is_authenticated %}
+    <section>
+        <h1 align="center"><u>{{ post.title }}</h1></u></h1>
+        <section>
+            <p>By: {{ post.author.username }} | Posted on: {{ post.date_posted }}</p>
+            <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paragraph" viewBox="0 0 16 16">
+                <path d="M10.5 15a.5.5 0 0 1-.5-.5V2H9v12.5a.5.5 0 0 1-1 0V9H7a4 4 0 1 1 0-8h5.5a.5.5 0 0 1 0 1H11v12.5a.5.5 0 0 1-.5.5"/>
+              </svg>    {{ post.content }}</h4>
+            <hr>
+            <h2 align="center">Comments</h2>
+            {% for comment in post.comments %}
+            <div>
+                <section>
+                    <p>By: {{ comment.user.username }} | Posted on: {{ comment.date_posted }}</p>
+                    <h6><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+                        <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1m0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1m0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1"/>
+                      </svg>    {{ comment.content }}</h6>
+                </section>
+            </div>
+            {% endfor %}
+        </section>
+
+        {% if current_user.is_authenticated %}
         <form action="{{ url_for('post', post_id=post.id) }}" method="POST">
-            <textarea name="content" placeholder="Add a comment..." required></textarea><br>
-            <button type="submit">Submit</button>
+            <textarea 
+                name="content" 
+                placeholder="Add a comment.." required>
+            </textarea>
+            <br>
+            <button type="submit" class="btn btn-success">Submit</button>
         </form>
-    {% else %}
-        <p><a href="{{ url_for('login') }}">Login</a> to add a comment.</p>
-    {% endif %}
-    <a href="{{ url_for('index') }}">Back to Home</a>
+        {% else %}
+            <p><a href="{{ url_for('login') }}">Login</a> to add a comment.</p>
+        {% endif %}
+
+        <h5 align="center"><button class="btn btn-primary"><a href="{{ url_for('index') }}">Home</a></button>
+
+        <footer>
+            <p>&copy; 2024 Dev_aladinh production</p>
+        </footer>
+
+    </section>
 </body>
 </html>
 {% endblock %}

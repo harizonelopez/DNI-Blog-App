@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block tittle %} Editor Page {% endblock %}
+{% block tittle %} New Post page {% endblock %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -7,24 +7,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Post</title>
+    <style>
+        body {
+            display: flex;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282c35;
+            color: #fff;
+            align-items: center;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        header {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #373c49;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        h1 {
+            line-height: 1.7;
+            color: aqua;
+        }
+
+        label {
+            line-height: 1.7;
+            color: blueviolet;
+        }
+
+        h4 {
+            line-height: 1.5;
+            color: rgb(23, 146, 50);
+        }
+
+        footer {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 0em 0;
+            position: fixed;
+            bottom: 0;
+            width: 65%;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Create a New Post</h1>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div>{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <form action="{{ url_for('new_post') }}" method="POST">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required><br>
-        <label for="content">Content:</label><br>
-        <textarea id="content" name="content" rows="4" required></textarea><br>
-        <button type="submit">Create Post</button>
-    </form>
+    <section>
+        <h1 align="center">Create a New Post</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('new_post') }}" method="POST">
+            <label for="title">Title:</label><br>
+            <input 
+                type="text" 
+                id="title" 
+                name="title" required
+                placeholder="Enter post title.."><br>
+            <label for="content">Content:</label><br>
+            <textarea 
+                id="content" 
+                name="content" 
+                rows="7" required
+                placeholder="Enter post content.."></textarea><br>
+            <h4 align="center"><button type="submit" class="btn btn-success">Create Post</button></h4>
+        </form>
+
+        <footer>
+            <p>&copy; 2024 Dev_aladinh production</p>
+        </footer>
+
+    </section>
 </body>
 </html>
 {% endblock %}

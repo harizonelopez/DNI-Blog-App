@@ -36,11 +36,26 @@
         }
 
         a {
-            color: red;
+            color: rgb(28, 182, 143);
         }
 
         a:hover {
-            color: goldenrod;
+            color: orange;
+        }
+
+        h1 {
+            line-height: 1.7;
+            color: aqua;
+        }
+
+        h2 {
+            line-height: 1.7;
+            color: blueviolet;
+        }
+
+        h3 {
+            line-height: 1.5;
+            color: rgb(23, 146, 50);
         }
 
         footer {
@@ -56,30 +71,34 @@
 </head>
 <body>
     <section>
-        <h1>Welcome to the Blog</h1>
+        <header>Welcome to the Blog App</header>
         {% if current_user.is_authenticated %}
-            <p>Welcome {{ current_user.username }}. We are glad to have you here.</p>
-            <button class="btn btn-primary"><a href="{{ url_for('new_post' ) }}">Create</a></button>
+            <h1 align="center">Welcome {{ current_user.username }}. We are glad to have you here.</h1>
+            <a href="{{ url_for('new_post' ) }}">create new post</a>
         {% else %}
-            <h2>Welcome!</h2>
-            <p>Please log in to your account or sign up to get started.</p>
-                <button class="btn btn-primary"><a href="{{ url_for('signup') }}">Sign Up</a></button>
-                <button class="btn btn-primary"><a href="{{ url_for('login') }}">Login</a></button>
+            <section align="center">
+                <h1>Welcome!</h1>
+                <p>Please <a href="{{ url_for('login') }}">log in</a> to your account or <a href="{{ url_for('signup') }}">sign up</a> to get started.</p>
+            </section>
         {% endif %}
         
-        <!-- Display recent posts -->
+        <h2 align="center"><u>Recent Posts</u></h2>
         {% for post in posts %}
-            <h2>Recent posts</h2>
-            <div>
-                <h2>{{ post.title }}</h2>
-                <p>By: {{ post.author.username }} | Posted on: {{ post.date_posted }}</p>
-                <p>{{ post.content }}</p>
-                <a href="{{ url_for('post', post_id=post.id) }}">Read more</a>
-
-                <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
-                    <button type="submit" class="btn btn-primary">Delete post</button>
-                </form>
-            </div>
+            <section>
+                <div>
+                    <h3><b>{{ post.title }}</b></h3>
+                    <p>By: {{ post.author.username }} </p>
+                    <p>Posted on: {{ post.date_posted }}</p>
+                    <section>
+                        <p>{{ post.content }}</p>
+                        <a href="{{ url_for('post', post_id=post.id) }}">Read more</a>
+                    </section>
+    
+                    <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
+                        <button type="submit" class="btn btn-danger">Delete post</button>
+                    </form>
+                </div>
+            </section>
         {% endfor %}
         
        <footer>
