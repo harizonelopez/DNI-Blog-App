@@ -1,0 +1,92 @@
+{% extends "base.html" %} 
+{% block title %} Home page {% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282c35;
+            color: #fff;
+            align-items: center;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        header {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #373c49;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        a {
+            color: red;
+        }
+
+        a:hover {
+            color: goldenrod;
+        }
+
+        footer {
+            background-color: #1e2229;
+            text-align: center;
+            padding: 0em 0;
+            position: fixed;
+            bottom: 0;
+            width: 65%;
+        }
+
+    </style>
+</head>
+<body>
+    <section>
+        <h1>Welcome to the Blog</h1>
+        {% if current_user.is_authenticated %}
+            <p>Welcome {{ current_user.username }}. We are glad to have you here.</p>
+            <button class="btn btn-primary"><a href="{{ url_for('new_post' ) }}">Create</a></button>
+        {% else %}
+            <h2>Welcome!</h2>
+            <p>Please log in to your account or sign up to get started.</p>
+                <button class="btn btn-primary"><a href="{{ url_for('signup') }}">Sign Up</a></button>
+                <button class="btn btn-primary"><a href="{{ url_for('login') }}">Login</a></button>
+        {% endif %}
+        
+        <!-- Display recent posts -->
+        {% for post in posts %}
+            <h2>Recent posts</h2>
+            <div>
+                <h2>{{ post.title }}</h2>
+                <p>By: {{ post.author.username }} | Posted on: {{ post.date_posted }}</p>
+                <p>{{ post.content }}</p>
+                <a href="{{ url_for('post', post_id=post.id) }}">Read more</a>
+
+                <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
+                    <button type="submit" class="btn btn-primary">Delete post</button>
+                </form>
+            </div>
+        {% endfor %}
+        
+       <footer>
+            <p>&copy; 2024 Dev_aladinh production</p>
+       </footer> 
+
+    </section>
+</body>
+</html>
+{% endblock %}
