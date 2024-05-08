@@ -94,7 +94,7 @@
                         <a href="{{ url_for('post', post_id=post.id) }}">Read more</a>
                     </section>
     
-                    <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
+                    <form method="POST" action="{{ url_for('delete_post') }}">
                         <button type="submit" class="btn btn-danger">Delete post</button>
                     </form>
                 </div>
