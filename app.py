@@ -134,21 +134,12 @@ def profile():
 from flask import flash, redirect, url_for
 from flask_login import login_required
 
-@app.route('/delete_post/<int:post_id>', methods=['POST'])
-@login_required
-def delete_post(post_id):
-    post = Post.query.get_or_404(post_id)
-
-    if post.author != current_user:
-        flash('You are not authorized to delete this post.', 'danger')
-        return redirect(url_for('index'))
-
-    db.session.delete(post)
-    db.session.commit()
-
-    flash('Post deleted successfully.', 'success')
+@app.route('/delete_post', methods=['POST'])
+def delete_post():
+    if request.method == 'POST':
+        flash('Post will be deleted in 2mins time', 'success')
+        
     return redirect(url_for('index'))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
