@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user, login_required
 from datetime import datetime
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'aladinh00-010montext'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -11,7 +10,6 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 # User model
 class User(UserMixin, db.Model):
