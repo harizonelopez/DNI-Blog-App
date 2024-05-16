@@ -71,7 +71,7 @@
 </head>
 <body>
     <section>
-        <header>Welcome to the Blog App</header>
+        <header> Welcome to the Blog App </header>
         {% if current_user.is_authenticated %}
             <h1 align="center">Welcome {{ current_user.username }}. We are glad to have you here.</h1>
             <a href="{{ url_for('new_post' ) }}">create new post</a>
@@ -104,7 +104,6 @@
        <footer>
             <p>&copy; 2024 Dev_aladinh production</p>
        </footer> 
-
     </section>
 </body>
 </html>
